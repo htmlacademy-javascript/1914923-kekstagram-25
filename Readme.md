@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Андрей Кикин](https://up.htmlacademy.ru/javascript/25/user/1914923).
-* Наставник: `Неизвестно`.
+* Наставник: [Никита Сигов](https://htmlacademy.ru/profile/crazer).
 
 ---
 
