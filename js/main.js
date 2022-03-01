@@ -50,22 +50,35 @@ const MESSAGES = [
 ];
 
 const SIMILAR_CARD_COUNT = 25;
+const MAX_COMMENT_COUNT = 30;
+const randomIDFilter = [];
 
-function getRandomInt(a, b) {
+const getRandomInt = (a, b) => {
   if (a < 0 || b < 0) {
     return window.console.error('Значения не должны быть отрицательными.');
   }
   const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const max = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 const checkStringLength = (string, length) => string.length <= length;
 
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
+const getRandomID = () => {
+  const max = SIMILAR_CARD_COUNT * MAX_COMMENT_COUNT;
+  while (randomIDFilter.length <= max) {
+    const randomInt = getRandomInt(100, 999);
+    if (randomIDFilter.indexOf(randomInt) === -1) {
+      randomIDFilter.push(randomInt);
+      return randomInt;
+    }
+  }
+};
+
 const createComments = () => ({
-  id: getRandomInt(100, 999),
+  id: getRandomID(),
   avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: `${getRandomArrayElement(NAMES)} ${getRandomArrayElement(SURNAMES)}`,
@@ -76,11 +89,10 @@ const createCard = (_, i) => ({
   url: `photos/${i + 1}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInt(15, 200),
-  comments: Array.from({length: getRandomInt(1, 30)}, createComments),
+  comments: Array.from({length: getRandomInt(0, MAX_COMMENT_COUNT)}, createComments),
 });
 
 const similarCards = Array.from({length: SIMILAR_CARD_COUNT}, createCard);
-
+randomIDFilter.length = 0;
 window.console.log(similarCards);
-
 checkStringLength('some random comment', 140);
