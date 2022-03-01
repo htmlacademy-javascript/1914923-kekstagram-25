@@ -67,14 +67,12 @@ const checkStringLength = (string, length) => string.length <= length;
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
 const getRandomID = () => {
-  const max = SIMILAR_CARD_COUNT * MAX_COMMENT_COUNT;
-  while (randomIDFilter.length <= max) {
-    const randomInt = getRandomInt(100, 999);
-    if (randomIDFilter.indexOf(randomInt) === -1) {
-      randomIDFilter.push(randomInt);
-      return randomInt;
-    }
+  const randomInt = getRandomInt(100, 999);
+  if (randomIDFilter.indexOf(randomInt) === -1) {
+    randomIDFilter.push(randomInt);
+    return randomInt;
   }
+  return getRandomID();
 };
 
 const createComments = () => ({
