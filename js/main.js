@@ -1,3 +1,1 @@
-import {similarCards} from './data.js';
-
-window.console.log(similarCards());
+import './render-thumb.js';
