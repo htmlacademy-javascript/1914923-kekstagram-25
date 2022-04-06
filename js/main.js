@@ -1,1 +1,3 @@
-import './render-thumb.js';
+import {getRenderedImages} from './render-thumb.js';
+
+getRenderedImages();
