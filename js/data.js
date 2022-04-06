@@ -85,4 +85,6 @@ const similarCards = () => {
   return cards;
 };
 
-export {similarCards};
+const readyData = similarCards();
+
+export {readyData};
