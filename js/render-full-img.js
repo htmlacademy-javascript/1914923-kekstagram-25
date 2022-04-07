@@ -32,7 +32,9 @@ const createComments = (partData) => {
 };
 
 const createBlock = (item) => {
-  item.onclick = () => {
+  item.onclick = (evt) => {
+    evt.preventDefault();
+
     const partData = searchData(item);
     fullSizePicture.src = partData.url;
     likesCount.textContent = partData.likes;
@@ -51,8 +53,8 @@ const createBlock = (item) => {
       document.body.classList.remove('modal-open');
     };
 
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
         pictureWindow.classList.add('hidden');
         document.body.classList.remove('modal-open');
       }
