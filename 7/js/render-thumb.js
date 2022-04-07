@@ -1,0 +1,19 @@
+import {readyData} from './data.js';
+
+const fragment = document.createDocumentFragment();
+const container = document.querySelector('.pictures.container');
+const temp = document.querySelector('#picture').content.querySelector('.picture');
+
+const getRenderedImages = () => {
+  for (let i=0; i<readyData.length; i++) {
+    const newContent = temp.cloneNode(true);
+    newContent.querySelector('.picture__img').src = readyData[i].url;
+    newContent.querySelector('.picture__likes').textContent = readyData[i].likes;
+    newContent.querySelector('.picture__comments').textContent = readyData[i].comments.length;
+    fragment.append(newContent);
+  }
+
+  container.append(fragment);
+};
+
+export {getRenderedImages};
