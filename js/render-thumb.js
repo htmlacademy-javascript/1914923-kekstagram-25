@@ -11,11 +11,11 @@ const getRenderedImages = () => {
     newContent.querySelector('.picture__img').src = readyData[i].url;
     newContent.querySelector('.picture__likes').textContent = readyData[i].likes;
     newContent.querySelector('.picture__comments').textContent = readyData[i].comments.length;
+    createBlock(newContent);
     fragment.append(newContent);
   }
 
   container.append(fragment);
-  document.querySelectorAll('.picture').forEach((item) => createBlock(item));
 };
 
 export {getRenderedImages};
