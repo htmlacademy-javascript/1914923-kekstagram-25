@@ -1,4 +1,5 @@
 import {readyData} from './data.js';
+import { createBlock } from './render-full-img.js';
 
 const fragment = document.createDocumentFragment();
 const container = document.querySelector('.pictures.container');
@@ -14,6 +15,7 @@ const getRenderedImages = () => {
   }
 
   container.append(fragment);
+  document.querySelectorAll('.picture').forEach((item) => createBlock(item));
 };
 
 export {getRenderedImages};

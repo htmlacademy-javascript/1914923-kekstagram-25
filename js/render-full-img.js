@@ -1,7 +1,6 @@
 import {readyData} from './data.js';
 
 const fragment = document.createDocumentFragment();
-const thumbnails = document.querySelector('.pictures.container').children;
 const pictureWindow = document.querySelector('.big-picture');
 const fullSizePicture = pictureWindow.querySelector('.big-picture__img img');
 const likesCount = pictureWindow.querySelector('.likes-count');
@@ -33,7 +32,7 @@ const createComments = (partData) => {
 };
 
 const createBlock = (item) => {
-  item.onclick = (evt) => {
+  item.addEventListener('click', (evt) => {
     evt.preventDefault();
 
     const partData = searchData(item);
@@ -49,26 +48,18 @@ const createBlock = (item) => {
     pictureWindow.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    cancelPictureWindow.onclick = () => {
+    cancelPictureWindow.addEventListener('click', () => {
       pictureWindow.classList.add('hidden');
       document.body.classList.remove('modal-open');
-    };
+    });
 
     document.addEventListener('keydown', (e) => {
-      if (e.keyCode === 27) {
+      if (e.key === 'Escape') {
         pictureWindow.classList.add('hidden');
         document.body.classList.remove('modal-open');
       }
     });
-  };
+  });
 };
 
-const getFullImage = () => {
-  for (let i=0; i<thumbnails.length; i++) {
-    if (thumbnails[i].classList.contains('picture')) {
-      createBlock(thumbnails[i]);
-    }
-  }
-};
-
-export {getFullImage};
+export {createBlock};
