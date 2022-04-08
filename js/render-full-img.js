@@ -31,7 +31,7 @@ const createComments = (partData) => {
   commentsContent.append(fragment);
 };
 
-const createBlock = (item) => {
+const renderFullPicture = (item) => {
   item.addEventListener('click', (evt) => {
     evt.preventDefault();
 
@@ -62,4 +62,4 @@ const createBlock = (item) => {
   });
 };
 
-export {createBlock};
+export {renderFullPicture};
