@@ -1,4 +1,5 @@
 import {readyData} from './data.js';
+import {renderFullPicture} from './render-full-img.js';
 
 const fragment = document.createDocumentFragment();
 const container = document.querySelector('.pictures.container');
@@ -10,6 +11,7 @@ const getRenderedImages = () => {
     newContent.querySelector('.picture__img').src = readyData[i].url;
     newContent.querySelector('.picture__likes').textContent = readyData[i].likes;
     newContent.querySelector('.picture__comments').textContent = readyData[i].comments.length;
+    renderFullPicture(newContent);
     fragment.append(newContent);
   }
 
