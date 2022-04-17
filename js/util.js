@@ -24,6 +24,10 @@ const openModalWindow = (element) => {
 
       if (element.classList.contains('img-upload__overlay')) {
         document.querySelector('.img-upload__form').reset();
+      } else {
+        const oldButton = element.querySelector('.social__comments-loader');
+        const clearButton = oldButton.cloneNode(true);
+        oldButton.parentNode.replaceChild(clearButton, oldButton);
       }
 
       element.querySelector('.cancel').removeEventListener('click', closeModalWindow);

@@ -18,17 +18,32 @@ const searchData = (item) => {
   }
 };
 
-const createComments = (partData) => {
-  for (let i=0; i<partData.comments.length; i++) {
-    const commentItem = commentCopy.cloneNode(true);
-    commentItem.querySelector('.social__picture').src = partData.comments[i].avatar;
-    commentItem.querySelector('.social__picture').alt = partData.comments[i].name;
-    commentItem.querySelector('.social__text').textContent = partData.comments[i].message;
-    fragment.append(commentItem);
-  }
-
+const renderComments = (partData, moreComments) => {
+  let messageCounter = 0;
   commentsContent.textContent = '';
-  commentsContent.append(fragment);
+
+  const createComments = () => {
+    for (let i=0; messageCounter<partData.comments.length; i++) {
+      const commentItem = commentCopy.cloneNode(true);
+      commentItem.querySelector('.social__picture').src = partData.comments[messageCounter].avatar;
+      commentItem.querySelector('.social__picture').alt = partData.comments[messageCounter].name;
+      commentItem.querySelector('.social__text').textContent = partData.comments[messageCounter].message;
+      fragment.append(commentItem);
+      messageCounter++;
+      if (i>=4) {break;}
+    }
+
+    commentsContent.append(fragment);
+    pictureWindow.querySelector('.social__comment-count').firstChild.textContent = `${messageCounter} из `;
+
+    if (messageCounter>=partData.comments.length) {
+      moreComments.classList.add('hidden');
+      moreComments.removeEventListener('click', createComments);
+    }
+  };
+
+  createComments();
+  moreComments.addEventListener('click', createComments);
 };
 
 const renderFullPicture = (item) => {
@@ -40,10 +55,10 @@ const renderFullPicture = (item) => {
     likesCount.textContent = partData.likes;
     commentsCount.textContent = partData.comments.length;
     pictureDescription.textContent = partData.description;
-    createComments(partData);
 
-    pictureWindow.querySelector('.social__comment-count').classList.add('hidden');
-    pictureWindow.querySelector('.comments-loader').classList.add('hidden');
+    const moreComments = pictureWindow.querySelector('.social__comments-loader');
+    moreComments.classList.remove('hidden');
+    renderComments(partData, moreComments);
 
     openModalWindow(pictureWindow);
   });
