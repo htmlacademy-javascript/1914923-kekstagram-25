@@ -1,3 +1,4 @@
+import {openModalWindow} from './util.js';
 import {readyData} from './data.js';
 
 const fragment = document.createDocumentFragment();
@@ -8,7 +9,6 @@ const commentsCount = pictureWindow.querySelector('.comments-count');
 const commentsContent = pictureWindow.querySelector('.social__comments');
 const commentCopy = commentsContent.querySelector('li').cloneNode(true);
 const pictureDescription = pictureWindow.querySelector('.social__caption');
-const cancelPictureWindow = pictureWindow.querySelector('.big-picture__cancel');
 
 const searchData = (item) => {
   for (let i=0; i<readyData.length; i++) {
@@ -45,20 +45,7 @@ const renderFullPicture = (item) => {
     pictureWindow.querySelector('.social__comment-count').classList.add('hidden');
     pictureWindow.querySelector('.comments-loader').classList.add('hidden');
 
-    pictureWindow.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-
-    cancelPictureWindow.addEventListener('click', () => {
-      pictureWindow.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        pictureWindow.classList.add('hidden');
-        document.body.classList.remove('modal-open');
-      }
-    });
+    openModalWindow(pictureWindow);
   });
 };
 
