@@ -8,8 +8,31 @@ const getRandomInt = (a, b) => {
 };
 
 const checkStringLength = (string, length) => string.length <= length;
-checkStringLength('some random comment', 140);
 
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
-export {getRandomInt, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const openModalWindow = (element) => {
+  element.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  const closeModalWindow = (evt) => {
+    if (evt.type==='click' || isEscapeKey(evt)) {
+      element.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+
+      if (element.classList.contains('img-upload__overlay')) {
+        document.querySelector('.img-upload__form').reset();
+      }
+
+      element.querySelector('.cancel').removeEventListener('click', closeModalWindow);
+      document.removeEventListener('keydown', closeModalWindow);
+    }
+  };
+
+  element.querySelector('.cancel').addEventListener('click', closeModalWindow);
+  document.addEventListener('keydown', closeModalWindow);
+};
+
+export {getRandomInt, getRandomArrayElement, isEscapeKey, openModalWindow, checkStringLength};
