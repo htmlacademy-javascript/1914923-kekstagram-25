@@ -566,6 +566,29 @@ main {
   display: none;
 }
 
+.effect-level__slider {
+  height: 19px;
+}
+
+.effect-level__slider .noUi-handle {
+  height: 19px;
+  width: 19px;
+  top: -1px;
+  right: -9px;
+  background-color: #2b71c0;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.effect-level__slider .noUi-active {
+  background-color: #3f8fea;
+  box-shadow: none;
+}
+
+.noUi-handle::before,
+.noUi-handle::after {
+  display: none;
+}
 
 /**
  * Блок с эффектами, которые можно применить к изображению
