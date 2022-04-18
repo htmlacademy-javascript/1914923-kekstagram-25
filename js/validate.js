@@ -8,7 +8,7 @@ const pristine = new Pristine(form, {
 });
 
 const validateHeshTags = (element) => {
-  const tegs = element.split(' ');
+  const tegs = element.toUpperCase().split(' ');
   return tegs.length <= 5 && (new Set(tegs)).size === tegs.length;
 };
 
