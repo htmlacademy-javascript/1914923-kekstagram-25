@@ -1,6 +1,7 @@
-import {isEscapeKey, openModalWindow} from './util.js';
+import {isEscapeKey, openModalWindow, disableButton} from './util.js';
 import {pristine, form} from './validate.js';
 import {giveEffects, createSlider} from './slider-img-effect.js';
+import {sendData} from './api.js';
 
 const formWindow = document.querySelector('.img-upload__overlay');
 const inputUploadPicture = document.querySelector('#upload-file');
@@ -71,8 +72,11 @@ const openFormWindow = () => {
   inputDescription.addEventListener('keydown', stopEvent);
 
   form.addEventListener('submit', (evt) => {
-    if (!pristine.validate(true)) {
-      evt.preventDefault();
+    evt.preventDefault();
+    if (pristine.validate(true)) {
+      disableButton();
+      const formData = new FormData(evt.target);
+      sendData(formData, form);
     }
   });
 };

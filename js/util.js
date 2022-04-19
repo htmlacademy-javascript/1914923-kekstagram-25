@@ -1,15 +1,6 @@
-const getRandomInt = (a, b) => {
-  if (a < 0 || b < 0) {
-    return window.console.error('Значения не должны быть отрицательными.');
-  }
-  const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const max = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+const ALERT_SHOW_TIME = 8000;
 
 const checkStringLength = (string, length) => string.length <= length;
-
-const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -39,4 +30,57 @@ const openModalWindow = (element) => {
   document.addEventListener('keydown', closeModalWindow);
 };
 
-export {getRandomInt, getRandomArrayElement, isEscapeKey, openModalWindow, checkStringLength};
+const showMessage = (element) => {
+  const messageWindow = element.cloneNode(true);
+  const messageClose = messageWindow.querySelector('button');
+  document.body.classList.add('modal-open');
+
+  const closeMessage = (evt) => {
+    if ((evt.type==='click' && (evt.target===messageWindow || evt.target===messageClose)) || isEscapeKey(evt)) {
+      document.body.classList.remove('modal-open');
+      messageWindow.remove();
+    }
+  };
+
+  messageWindow.addEventListener('click', closeMessage);
+  messageClose.addEventListener('click', closeMessage);
+  document.addEventListener('keydown', closeMessage);
+  document.body.append(messageWindow);
+};
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'fixed';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '20px';
+  alertContainer.style.right = '0';
+  alertContainer.style.maxWidth = 'fit-content';
+  alertContainer.style.margin = '0 auto';
+  alertContainer.style.padding = '10px 5px 10px 20px';
+  alertContainer.style.fontSize = '15px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.background = 'linear-gradient(90deg, #ff000f 15px, #232321 15px)';
+  alertContainer.style.border = '3px solid #ff000f';
+  alertContainer.style.borderRadius = '15px';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+const disableButton = () => {
+  document.querySelector('.img-upload__submit').disabled = true;
+  document.querySelector('.img-upload__submit').textContent = 'Публикация...';
+};
+
+const enableButton = () => {
+  document.querySelector('.img-upload__submit').disabled = false;
+  document.querySelector('.img-upload__submit').textContent = 'Опубликовать';
+};
+
+export {isEscapeKey, openModalWindow, checkStringLength, showAlert, disableButton, enableButton, showMessage};
