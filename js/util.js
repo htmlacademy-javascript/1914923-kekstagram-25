@@ -1,8 +1,19 @@
-const ALERT_SHOW_TIME = 8000;
-
-const checkStringLength = (string, length) => string.length <= length;
+const ALERT_SHOW_TIME = 10000;
+const DEBOUNCE_TIMEOUT = 500;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const debounce = (callback, previousTarget, timeoutDelay = DEBOUNCE_TIMEOUT) => {
+  let timeoutId;
+  return (...rest) => {
+    if(rest[0].target===previousTarget[0]) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    } else {
+      return callback.apply(this, rest);
+    }
+  };
+};
 
 const openModalWindow = (element) => {
   element.classList.remove('hidden');
@@ -30,6 +41,12 @@ const openModalWindow = (element) => {
   document.addEventListener('keydown', closeModalWindow);
 };
 
+const showLoad = (element) => {
+  const loadWindow = element.cloneNode(true);
+  document.body.classList.add('modal-open');
+  document.body.append(loadWindow);
+};
+
 const showMessage = (element) => {
   const messageWindow = element.cloneNode(true);
   const messageClose = messageWindow.querySelector('button');
@@ -45,6 +62,7 @@ const showMessage = (element) => {
   messageWindow.addEventListener('click', closeMessage);
   messageClose.addEventListener('click', closeMessage);
   document.addEventListener('keydown', closeMessage);
+  document.querySelector('.img-upload__message').remove();
   document.body.append(messageWindow);
 };
 
@@ -83,4 +101,4 @@ const enableButton = () => {
   document.querySelector('.img-upload__submit').textContent = 'Опубликовать';
 };
 
-export {isEscapeKey, openModalWindow, checkStringLength, showAlert, disableButton, enableButton, showMessage};
+export {isEscapeKey, debounce, openModalWindow, showAlert, disableButton, enableButton, showMessage, showLoad};

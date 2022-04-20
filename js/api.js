@@ -1,4 +1,4 @@
-import {getRenderedImages} from './render-thumb.js';
+import {getRenderedImages, getFilteredImages} from './render-thumb.js';
 import {showMessage, showAlert, enableButton} from './util.js';
 
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
@@ -9,6 +9,7 @@ const getData = () => {
     .then((response) => response.json())
     .then((data) => {
       getRenderedImages(data);
+      getFilteredImages(data);
     })
     .catch((err) => {
       showAlert(`При загрузке страницы произошла ошибка! (${err.message})`);
