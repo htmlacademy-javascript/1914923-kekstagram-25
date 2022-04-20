@@ -1,5 +1,4 @@
 import {openModalWindow} from './util.js';
-import {readyData} from './data.js';
 
 const fragment = document.createDocumentFragment();
 const pictureWindow = document.querySelector('.big-picture');
@@ -10,10 +9,10 @@ const commentsContent = pictureWindow.querySelector('.social__comments');
 const commentCopy = commentsContent.querySelector('li').cloneNode(true);
 const pictureDescription = pictureWindow.querySelector('.social__caption');
 
-const searchData = (item) => {
-  for (let i=0; i<readyData.length; i++) {
-    if (item.querySelector('.picture__img').src.includes(readyData[i].url)) {
-      return readyData[i];
+const searchData = (item, data) => {
+  for (let i=0; i<data.length; i++) {
+    if (item.querySelector('.picture__img').src.includes(data[i].url)) {
+      return data[i];
     }
   }
 };
@@ -46,11 +45,11 @@ const renderComments = (partData, moreComments) => {
   moreComments.addEventListener('click', createComments);
 };
 
-const renderFullPicture = (item) => {
+const renderFullPicture = (item, data) => {
   item.addEventListener('click', (evt) => {
     evt.preventDefault();
 
-    const partData = searchData(item);
+    const partData = searchData(item, data);
     fullSizePicture.src = partData.url;
     likesCount.textContent = partData.likes;
     commentsCount.textContent = partData.comments.length;

@@ -1,5 +1,5 @@
-import {getRenderedImages} from './render-thumb.js';
 import {openFormWindow} from './upload-user-img.js';
+import {getData} from './api.js';
 
-getRenderedImages();
+getData();
 openFormWindow();
